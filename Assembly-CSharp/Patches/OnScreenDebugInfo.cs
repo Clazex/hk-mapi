@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Threading;
 using MonoMod;
 using UnityEngine;
@@ -16,6 +17,10 @@ namespace Modding.Patches
         {
             if (ModLoader.LoadState == ModLoader.ModLoadState.NotStarted)
             {
+                // Use InvariantCulture to prevent (de)serialization inconsistency
+                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+
                 Logger.APILogger.Log("Main menu loading");
                 ModLoader.LoadState = ModLoader.ModLoadState.Started;
 
